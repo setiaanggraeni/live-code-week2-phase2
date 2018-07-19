@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Setia</title>
+</head>
+<style>
+    input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+    .container {
+    padding: 16px;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+</style>
+<body>
+    <div class="container" id="app">
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Email" v-model="email" required>
+    
+        <label for="name"><b>Password</b></label>
+        <input type="text" placeholder="Name" v-model="name" required>
+            
+        <button v-on:click='login'>Login</button>
+        <label>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                email: '',
+                name: ''
+            },
+            
+            methods: {
+                login() {
+                    event.preventDefault()
+                    axios.post('http://35.240.157.177/request-token', {
+                        
+                        email: this.email,
+                        name: this.name
+                    })
+                    .then(({ data }) => {
+                        console.log(data);
+                        localStorage.setItem("token", data.uuid)
+                        window.location ='home.html'
+                    })
+                    .catch(function (error) {
+                        console.log('error')
+                    })
+                },
+            }
+        })
+    </script>
+</body>
+</html>
